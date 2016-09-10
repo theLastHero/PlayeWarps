@@ -1,0 +1,13 @@
+name: PlayeWarps
+version: 0.1.dev
+description: PlayerWarps
+author: judgetread
+authors: [judgetread] 
+website: http://thelasthero.net
+main: PlayerWarps.PlayerWarps
+depend: [Vault]
+commands:
+   playerwarps:
+      description: Set and go to player warps.
+      usage: /playerwarps list/set/remove
+      aliases: [pwarps, pwarp, playerwarp]      
