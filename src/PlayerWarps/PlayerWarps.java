@@ -2,21 +2,22 @@ package PlayerWarps;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.UUID;
 
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import Listeners.ChestListener;
 import Listeners.CommandListener;
+import Managers.HashMapManager;
 import Managers.chestManager;
 import Utils.SLAPI;
+
 
 public class PlayerWarps extends JavaPlugin{
 	
@@ -24,8 +25,10 @@ public class PlayerWarps extends JavaPlugin{
     public static Permission perms = null;
     public static PlayerWarps instance;
     public static chestManager chestman = null;
+    public static HashMapManager hashMan = null;
     public String playerDataFolderPath = this.getDataFolder() + File.separator + "player_warps"+ File.separator;
     public static HashMap<String, String> playerWarps = new HashMap<String, String>();// namecolor list hashmap
+    public static GriefPrevention gp; 
     
     public static Plugin getInstance() {
 		return instance;
@@ -37,7 +40,7 @@ public class PlayerWarps extends JavaPlugin{
 	@Override
 	public void onDisable() {
 		try {
-			SLAPI.save(playerWarps, playerDataFolderPath+"warps.bin");
+			SLAPI.save(PlayerWarps.playerWarps, playerDataFolderPath+"warps.bin");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,9 +57,12 @@ public class PlayerWarps extends JavaPlugin{
 		this.getCommand("playerwarps").setExecutor(new CommandListener(this));
 		Bukkit.getServer().getPluginManager().registerEvents(new ChestListener(null), this);
 		chestman = new chestManager(this);
+		hashMan = new HashMapManager(this);
+		gp = GriefPrevention.instance;
 		
 		setupEconomy();
 		setupPermissions();
+		//hashMan.loadHashMap();
 		
 		try {
 			playerWarps = SLAPI.load(playerDataFolderPath+"warps.bin");
@@ -64,6 +70,7 @@ public class PlayerWarps extends JavaPlugin{
 			// handle the exception
 			e.printStackTrace();
 		}
+		
 		
 	}
 	
@@ -85,5 +92,7 @@ public class PlayerWarps extends JavaPlugin{
         perms = rsp.getProvider();
         return perms != null;
     }
+	
+
 
 }

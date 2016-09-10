@@ -5,7 +5,7 @@ author: judgetread
 authors: [judgetread] 
 website: http://thelasthero.net
 main: PlayerWarps.PlayerWarps
-depend: [Vault]
+depend: [Vault, GriefPrevention]
 commands:
    playerwarps:
       description: Set and go to player warps.

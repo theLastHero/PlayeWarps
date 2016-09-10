@@ -62,12 +62,14 @@ public class ChestListener implements Listener {
 				e.getWhoClicked().closeInventory();
 				
 				//send message to player
-				p.sendMessage(ChatColor.GREEN + "Warping to :" + e.getCurrentItem().getItemMeta().getDisplayName() + ChatColor.GREEN + " in 3 seconds");
+				final String warpName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
+				p.sendMessage(ChatColor.GREEN + "Warping to :" + warpName + ChatColor.GREEN + " in 3 seconds");
 
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(PlayerWarps.getInstance(), new Runnable() {
 					@Override
 					public void run() {
 						p.sendMessage("Done");
+						p.teleport(PlayerWarps.hashMan.getWarpLocation(warpName));
 					}
 				}, 60);
 
