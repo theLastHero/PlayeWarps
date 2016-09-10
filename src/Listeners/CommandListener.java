@@ -25,7 +25,7 @@ public class CommandListener implements CommandExecutor {
 		this.plugin = plugin; // Store the plugin in situations where you need it.
 	}
 
-	@SuppressWarnings("static-access")
+	@SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -45,6 +45,10 @@ public class CommandListener implements CommandExecutor {
 			}
 
 			if ((args.length == 1) && (args[0].equalsIgnoreCase("set"))) {
+				if (!PlayerWarps.perms.has("world", player.getName(), "PlayerWarps.set")) {
+					player.sendMessage(ChatColor.GREEN + "You do not have the permission to set a /pwarp" );
+					return true;
+				}
 				// do chest open gui here
 				//if (player.getWorld().equals(Bukkit.getWorld("world"))) {
 				//	player.sendMessage(ChatColor.GREEN + "You can't set a warp in this world");
