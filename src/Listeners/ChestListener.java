@@ -47,8 +47,9 @@ public class ChestListener implements Listener {
 					// PlayerWarps.chestman.openGUI((Player) e.getWhoClicked(), 2);
 					Bukkit.broadcastMessage("Clicked next page: "+ nextPageNum);
 					
+					Player p = (Player) e.getWhoClicked();
 					e.getWhoClicked().closeInventory();
-					chestManager.openGUI((Player) e.getWhoClicked(), nextPageNum);
+					chestManager.openGUI(p, nextPageNum);
 					return;
 				}
 

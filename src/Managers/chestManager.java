@@ -122,6 +122,7 @@ public class chestManager {
         int finishNumber = 0;
         int pageSize = 30;
         int pageNum = page;
+        int listSize = PlayerWarpList.size();
         
         startNum = pageNum * 53;
         Bukkit.broadcastMessage("startNum: "+startNum);
@@ -142,21 +143,26 @@ public class chestManager {
          * 
          * 
          */
-        
-        if(finishNumber > (PlayerWarpList.size())){
-        	finishNumber = (PlayerWarpList.size() - startNum);
-        	Bukkit.broadcastMessage("finNum2: "+finishNumber);
+       
+        //loop size
+        //==========
+        //calcutae loop size
+        int loopSize = startNum +53;
+        if(loopSize > (PlayerWarpList.size())){
+        	loopSize = ((PlayerWarpList.size()) - startNum);
         }
+
         
-    	for (int i = startNum; i < finishNumber; i++) {
+    	for (int i = 0; i < loopSize; i++) {
     		Wool PlayerWool = new Wool(DyeColor.LIGHT_BLUE);
             ItemStack NextPlayerWool = PlayerWool.toItemStack(1);
             ItemMeta NextPlayerMeta = NextPlayerWool.getItemMeta();
      
-            NextPlayerMeta.setDisplayName(ChatColor.GOLD + PlayerWarpList.get(i));
+            NextPlayerMeta.setDisplayName(ChatColor.GOLD + PlayerWarpList.get(i+startNum));
             NextPlayerWool.setItemMeta(NextPlayerMeta);
             
             inv.setItem(i, NextPlayerWool);
+            Bukkit.broadcastMessage(""+(i+startNum));
 		}
     	
     
