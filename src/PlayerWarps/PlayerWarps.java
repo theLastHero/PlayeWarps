@@ -1,9 +1,14 @@
 package PlayerWarps;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
+
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import Listeners.ChestListener;
 import Listeners.CommandListener;
 import Managers.chestManager;
+import Utils.SLAPI;
 
 public class PlayerWarps extends JavaPlugin{
 	
@@ -18,6 +24,8 @@ public class PlayerWarps extends JavaPlugin{
     public static Permission perms = null;
     public static PlayerWarps instance;
     public static chestManager chestman = null;
+    public String playerDataFolderPath = this.getDataFolder() + File.separator + "player_warps"+ File.separator;
+    public static HashMap<String, String> playerWarps = new HashMap<String, String>();// namecolor list hashmap
     
     public static Plugin getInstance() {
 		return instance;
@@ -28,8 +36,11 @@ public class PlayerWarps extends JavaPlugin{
 	 */
 	@Override
 	public void onDisable() {
-		// TODO Auto-generated method stub
-		super.onDisable();
+		try {
+			SLAPI.save(playerWarps, playerDataFolderPath+"warps.bin");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -46,6 +57,13 @@ public class PlayerWarps extends JavaPlugin{
 		
 		setupEconomy();
 		setupPermissions();
+		
+		try {
+			playerWarps = SLAPI.load(playerDataFolderPath+"warps.bin");
+		} catch (Exception e) {
+			// handle the exception
+			e.printStackTrace();
+		}
 		
 	}
 	

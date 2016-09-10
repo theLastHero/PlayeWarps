@@ -1,13 +1,19 @@
 package Listeners;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import PlayerWarps.PlayerWarps;
+import Utils.SLAPI;
 
 public class CommandListener implements CommandExecutor {
 	private final PlayerWarps plugin;
@@ -17,6 +23,7 @@ public class CommandListener implements CommandExecutor {
 	}
 
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
@@ -35,9 +42,10 @@ public class CommandListener implements CommandExecutor {
 			}
 			
 			
+				
 		}
 		
-		
+	
 	        // do something
 	        return false;
 		
